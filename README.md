@@ -7,3 +7,4 @@
    - `receiver_email`
    - `password`
 3. Установить зависимости - `pip install -r requirements.txt`
+4. Запускать проект из файла - `send_message.py`
