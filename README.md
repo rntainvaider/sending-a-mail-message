@@ -2,4 +2,8 @@
 
 ## Чтобы запустить проект, нужно:
 1. Создать виртуальное окружение - `python -m venv venv`
-2. Установить зависимости - `pip install -r requirements.txt`
+2. Создать файл .env с такими переменными как:
+   - `sender_email`
+   - `receiver_email`
+   - `password`
+3. Установить зависимости - `pip install -r requirements.txt`
