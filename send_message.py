@@ -1,46 +1,40 @@
 import os
 import smtplib
-import time
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-import schedule
 from dotenv import load_dotenv
 
 _ = load_dotenv()
 
-# Заготовленные текста
-texts = ["text1", "text2", "text3", "text4", "text5"]
 
+def send_email(subject, body, to_email, from_email, password):
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
 
-# Функция для отправки сообщений
-def send_email() -> None:
-    current_text_input = 0
-    sender_email = os.getenv("sender_email")  # Email отправителя
-    receiver_email = os.getenv("receiver_email")  # Email получателя
-    password = os.getenv("password")  # Пароль отправителя от почты
+    msg = MIMEMultipart()
+    msg["From"] = from_email
+    msg["To"] = to_email
+    msg["Subject"] = subject
 
-    # Соодщение для отправления
-    message = f"Message: Ваш текст\n\n{texts[current_text_input]}"
+    msg.attach(MIMEText(body, "plain"))
 
     try:
-        with smtplib.SMTP("smtp.gmail.com", 465) as server:
-            server.starttls  # Защита соединения
-            server.login(user=sender_email, password=password)
-            server.sendmail(sender_email, receiver_email, message)
-            server.quit()
-            print(f"Email отправлен: {texts[current_text_input]}")
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(from_email, password)
+
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.quit()
+        print("Письмо успешно отправлено!")
     except Exception as e:
-        print(f"Ошибка: {e}")
-
-    # Переключатель на следующий текст
-    current_text_input += 1
-    if current_text_input >= len(texts):
-        current_text_input = 0
+        print(f"Ошибка при отправке письма: {e}")
 
 
-# Планирование отправки сообщения каждые 30 секунд
-schedule.every(30).seconds.do(send_email)
-
-# Запуск цикла
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+send_email(
+    subject="Тестовое письмо",
+    body="Привет, это тектовое сообщение!",
+    to_email=os.getenv("receiver_email"),
+    from_email=os.getenv("sender_email"),
+    password=os.getenv("pass_app"),
+)
