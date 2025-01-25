@@ -34,7 +34,7 @@ def send_email(subject, body, to_email, from_email, password):
 send_email(
     subject="Тестовое письмо",
     body="Привет, это тектовое сообщение!",
-    to_email=os.getenv("receiver_email"),
-    from_email=os.getenv("sender_email"),
-    password=os.getenv("pass_app"),
+    to_email=os.getenv("to_email"),
+    from_email=os.getenv("from_email"),
+    password=os.getenv("password"),
 )
