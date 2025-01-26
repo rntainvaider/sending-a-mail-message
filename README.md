@@ -3,8 +3,8 @@
 ## Чтобы запустить проект, нужно:
 1. Создать виртуальное окружение - `python -m venv venv`
 2. Создать файл .env с такими переменными как:
-   - `sender_email`
-   - `receiver_email`
+   - `from_email`
+   - `to_email`
    - `password`
 3. Установить зависимости - `pip install -r requirements.txt`
 4. Запускать проект из файла - `send_message.py`
